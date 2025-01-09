@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { checkisloggedIn, getMyProfile, logoutUser } from '../Service/Auth.service.js';
+import { checkisloggedIn, logoutUser } from '../Service/Auth.service.js';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
@@ -10,9 +10,9 @@ function Home() {
     setIsLoggedIn(checkisloggedIn());
   },[]);
 
-  const handleLogout = () => {
+  const handleLogout = async() => {
     setIsLoggedIn(false);
-    logoutUser();
+    await logoutUser();
     navigate('/'); 
   };
 

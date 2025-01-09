@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
 import { registerUser } from '../Service/Auth.service';
 
 function Register() {
@@ -96,9 +96,9 @@ function Register() {
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             Already have an account?{' '}
-            <a href="/login" className="text-blue-600 hover:text-blue-800 font-medium">
+            <Link to="/login" className="text-blue-600 hover:text-blue-800 font-medium">
               Login here
-            </a>
+            </Link>
           </p>
         </div>
       </div>

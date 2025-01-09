@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
 import { loginUser } from '../Service/Auth.service';
 
 function Login() {
@@ -52,14 +52,14 @@ function Login() {
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             Don't have an account?{' '}
-            <a href="/register" className="text-blue-600 hover:text-blue-800 font-medium">
+            <Link to="/register" className="text-blue-600 hover:text-blue-800 font-medium">
               Register here
-            </a>
+            </Link>
           </p>
           <p className="text-sm text-gray-600 mt-2">
-            <a href="/forgot-password" className="text-blue-600 hover:text-blue-800 font-medium">
+            <Link to="/forgot-password" className="text-blue-600 hover:text-blue-800 font-medium">
               Forgot your password?
-            </a>
+            </Link>
           </p>
         </div>
       </div>
