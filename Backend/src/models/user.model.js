@@ -35,7 +35,11 @@ const userSchema=new Schema({
     },
     resetPasswordExpire: {
         type:Date,
-    } 
+    },
+    publicKey:{
+        type:String,
+        required : true,
+    }
 },{timestamps:true});
 
 
