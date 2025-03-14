@@ -36,12 +36,7 @@ const userSchema=new Schema({
     resetPasswordExpire: {
         type:Date,
     },
-    publicKey:{
-        type:String,
-        required : true,
-    }
 },{timestamps:true});
-
 
 userSchema.pre("save",async function(next){
     if(!this.isModified("password"))return next();
