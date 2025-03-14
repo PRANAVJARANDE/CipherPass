@@ -181,7 +181,7 @@ export const setPasswordService = async (password, token) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ password }),
+                body: JSON.stringify({ newPassword:password }),
             }
         );
 

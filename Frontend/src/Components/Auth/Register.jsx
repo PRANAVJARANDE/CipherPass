@@ -21,7 +21,7 @@ function Register() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1B1F3B] to-[#4D869C] text-white relative">
       <button
         className="absolute top-6 right-6 bg-[#3A7CA5] px-6 py-3 rounded-lg text-white font-semibold shadow-md transition-all hover:bg-[#81c3d7] hover:scale-105"
-        onClick={() => navigate("/Home")}
+        onClick={() => navigate("/")}
       >
         Home
       </button>

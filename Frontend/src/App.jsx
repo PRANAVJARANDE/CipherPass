@@ -5,7 +5,9 @@ import Register from './Components/Auth/Register.jsx';
 import FrogotPassword from './Components/Auth/FrogotPassword.jsx';
 import SetNewPassword from './Components/Auth/SetNewPassword.jsx';
 import Home from './Components/Home/Home.jsx';
-
+import Profile from './Components/Profile/Profile.jsx'
+import AllPassword from './Components/Password/AllPassword.jsx';
+import AddPassword from './Components/Password/AddPassword.jsx';
 
 function App() {
   return (
@@ -16,6 +18,9 @@ function App() {
         <Route path="/forgot-password" element={<FrogotPassword/>} />
         <Route path="/" element={<Home/>} />
         <Route path="/setpassword/:token" element={<SetNewPassword />} />
+        <Route path="/profile" element={<Profile/>} />
+        <Route path="/passwords" element={<AllPassword />} />
+        <Route path="/add_password" element={<AddPassword/>} />
       </Routes>
     </Router>
   );

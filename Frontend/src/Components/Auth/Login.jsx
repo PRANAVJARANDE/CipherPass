@@ -24,7 +24,7 @@ function Login() {
       {/* Home Button */}
       <button
         className="absolute top-6 right-6 bg-[#3A7CA5] px-6 py-3 rounded-lg text-white font-semibold shadow-md transition-all hover:bg-[#81c3d7] hover:scale-105"
-        onClick={() => navigate("/Home")}
+        onClick={() => navigate("/")}
       >
         Home
       </button>
@@ -33,7 +33,7 @@ function Login() {
         <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
-            type="email"
+            type="text"
             placeholder="Email or username"
             value={text}
             onChange={(e) => setText(e.target.value)}
