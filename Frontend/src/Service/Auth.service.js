@@ -31,7 +31,7 @@ export const loginUser = async (userData) => {
       console.error(error);
       return false;
     }
-  };
+};
   
 export const registerUser = async (userData) => {
     try {
@@ -61,117 +61,116 @@ export const registerUser = async (userData) => {
 export const checkisloggedIn = () => {
     const token = localStorage.getItem('accessToken');
     return !!token;
-  };
-  
+};
 
-  export const logoutUser = async () => {
-    try {
-      const token = localStorage.getItem('accessToken');
-      const response = await fetch(`${backendURL}/users/logout`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-  
-      if (response.status === 200) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('user');
-        toast.success("Logged out");
-        return true;
-      } else {
-        toast.error('Failed to log out');
-        return false;
-      }
-    } catch (error) {
-      toast.error('Server Error');
-      console.log(error);
+export const logoutUser = async () => {
+  try {
+    const token = localStorage.getItem('accessToken');
+    const response = await fetch(`${backendURL}/users/logout`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (response.status === 200) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      toast.success("Logged out");
+      return true;
+    } else {
+      toast.error('Failed to log out');
       return false;
     }
-  };
+  } catch (error) {
+    toast.error('Server Error');
+    console.log(error);
+    return false;
+  }
+};
 
-  export const getMyProfile = async () => {
-    try {
-      const token = localStorage.getItem('accessToken');
-      const response = await fetch(`${backendURL}/users/getcurrentuser`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      if (response.status === 200) {
-        return data.data;
-      } 
-      else 
-      {
-        return null;
-      }
+export const getMyProfile = async () => {
+  try {
+    const token = localStorage.getItem('accessToken');
+    const response = await fetch(`${backendURL}/users/getcurrentuser`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    if (response.status === 200) {
+      return data.data;
     } 
-    catch (error) 
+    else 
     {
-      toast.error('Failed to Load Profile');
       return null;
     }
-  };
+  } 
+  catch (error) 
+  {
+    toast.error('Failed to Load Profile');
+    return null;
+  }
+};
 
-  export const refreshTokenService = async () => {
-    try {
-      const token=localStorage.getItem('refreshToken');
-      if(!token)return;
-      
-      const response=await fetch(`${backendURL}/users/refresh-token`,{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({refreshToken:token})
-      });
-  
-      const data = await response.json();
-      if (response.status === 200) {
-        const {refreshToken,accessToken}=data.data;
-        console.log("New RT-",refreshToken);
-        console.log("New AT-",accessToken);
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-        return true;
-      } 
-      else 
-      {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('user');
-        return false;
-      }
-    } catch (error) {
-      console.log(error);
+export const refreshTokenService = async () => {
+  try {
+    const token=localStorage.getItem('refreshToken');
+    if(!token)return;
+    
+    const response=await fetch(`${backendURL}/users/refresh-token`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({refreshToken:token})
+    });
+
+    const data = await response.json();
+    if (response.status === 200) {
+      const {refreshToken,accessToken}=data.data;
+      console.log("New RT-",refreshToken);
+      console.log("New AT-",accessToken);
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+      return true;
+    } 
+    else 
+    {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
       return false;
     }
-  };
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
 
-  export const forgotpassService = async (email) => {
-    try {
-        const response = await fetch(`${backendURL}/users/forgotpassword`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email })
-        });
+export const forgotpassService = async (email) => {
+  try {
+      const response = await fetch(`${backendURL}/users/forgotpassword`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email })
+      });
 
-        if (response.status===200) {
-            const data = await response.json();
-            toast.success('Mail sent to email');
-            return { success: true, message: data.message };
-        }
-        toast.error("Try again");
-    } catch (error) {
-        console.error('Error in forgot password service:', error);
-        toast.error("Try again");
-    }
+      if (response.status===200) {
+          const data = await response.json();
+          toast.success('Mail sent to email');
+          return { success: true, message: data.message };
+      }
+      toast.error("Try again");
+  } catch (error) {
+      console.error('Error in forgot password service:', error);
+      toast.error("Try again");
+  }
 };
 
 export const setPasswordService = async (password, token) => {

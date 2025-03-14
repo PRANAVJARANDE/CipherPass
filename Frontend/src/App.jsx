@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './Components/Login.jsx';
-import Register from './Components/Register.jsx';
-import FrogotPassword from './Components/FrogotPassword.jsx';
-import SetNewPassword from './Components/SetNewPassword.jsx';
-import Home from './Components/Home.jsx';
+import Login from './Components/Auth/Login.jsx';
+import Register from './Components/Auth/Register.jsx';
+import FrogotPassword from './Components/Auth/FrogotPassword.jsx';
+import SetNewPassword from './Components/Auth/SetNewPassword.jsx';
+import Home from './Components/Home/Home.jsx';
 
 
 function App() {
@@ -15,7 +15,6 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<FrogotPassword/>} />
         <Route path="/" element={<Home/>} />
-        <Route path="/:fullname" element={<Home/>} />
         <Route path="/setpassword/:token" element={<SetNewPassword />} />
       </Routes>
     </Router>
