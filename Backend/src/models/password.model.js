@@ -1,19 +1,21 @@
 import mongoose,{Schema} from 'mongoose'
 
 const passwordSchema = new Schema({
+    user:{
+      type: Schema.Types.ObjectId,
+      ref:'User',
+      required: true,
+    },
     websiteURL: {
       type: String,
-      required: true,
       trim: true,
     },
     websiteName: {
       type: String,
-      required: true,
       trim: true,
     },
     username: {
       type: String,
-      required: true,
       trim: true,
     },
     password: {
@@ -23,7 +25,6 @@ const passwordSchema = new Schema({
     },
     email: {
       type: String,
-      required: true,
       trim: true,
     }
   })
