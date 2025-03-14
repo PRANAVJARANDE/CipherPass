@@ -1,3 +1,16 @@
+import React from 'react'
+
+function Profile() {
+    return (
+        <>
+            
+        </>
+    )
+}
+
+export default Profile
+
+
 // import React, { useState, useEffect } from 'react';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { setPrivateKey } from '../../Features/storeslice.js';
