@@ -109,11 +109,17 @@ const refreshAccessToken=asyncHandler(async(req,res)=>{
 
 const getCurrentUser = asyncHandler(async (req, res) => {
     if (!req.user) return res.status(400).json(new ApiResponse(400, null, "User not authenticated"));
-
     const curruser = await User.aggregate([
         {
             $match: {
                 username: req.user.username
+            }
+        },
+        {
+            $project: {
+                password: 0 ,
+                refreshToken:0,
+                _id:0
             }
         }
     ]);
