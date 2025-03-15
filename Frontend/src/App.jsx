@@ -8,6 +8,7 @@ import Home from './Components/Home/Home.jsx';
 import Profile from './Components/Profile/Profile.jsx'
 import AllPassword from './Components/Password/AllPassword.jsx';
 import AddPassword from './Components/Password/AddPassword.jsx';
+import PasswordDetail from './Components/PasswordDetail/PasswordDetail.jsx';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/profile" element={<Profile/>} />
         <Route path="/passwords" element={<AllPassword />} />
         <Route path="/add_password" element={<AddPassword/>} />
+        <Route path="/passwords/:id" element={<PasswordDetail />} />
       </Routes>
     </Router>
   );
