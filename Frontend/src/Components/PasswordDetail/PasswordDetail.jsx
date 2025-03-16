@@ -4,6 +4,7 @@ import Dashboard from "../Dashboard";
 import { get_A_Password_Service, sanitizeKey } from "../../Service/Password.service";
 import { useSelector } from "react-redux";
 
+
 const PasswordDetail = () => {
   const { id } = useParams();
   const [passwordData, setPasswordData] = useState(null);
@@ -11,6 +12,7 @@ const PasswordDetail = () => {
   const [error, setError] = useState(null);
 
   const publicKey = useSelector((state) => sanitizeKey(state.publicKey));
+  const privateKey = useSelector((state) => state.privateKey);
 
   useEffect(() => {
     const fetchPassword = async () => {
@@ -21,7 +23,7 @@ const PasswordDetail = () => {
       }
 
       try {
-        const response = await get_A_Password_Service(id, publicKey);
+        const response = await get_A_Password_Service(id, publicKey,privateKey);
         if (response) {
           setPasswordData(response);
         } else {
@@ -34,7 +36,6 @@ const PasswordDetail = () => {
         setLoading(false);
       }
     };
-
     fetchPassword();
   }, [id, publicKey]);
 
@@ -61,7 +62,7 @@ const PasswordDetail = () => {
             <strong>Email:</strong> {passwordData.email}
           </p>
           <p>
-            <strong>Encrypted Password:</strong> {passwordData.encryptedPassword}
+            <strong>Password:</strong> {passwordData.password}
           </p>
           <p>
             <strong>ID:</strong> {passwordData._id}
