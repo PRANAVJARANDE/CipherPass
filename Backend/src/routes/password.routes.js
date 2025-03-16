@@ -8,7 +8,7 @@ router.route('/addpassword').post(verifyJWT,addPassword);
 router.route("/deletePassword/:passwordID").delete(verifyJWT, deletePassword);
 router.route("/updatePassword/:passwordID").patch(verifyJWT, updatePassword);
 router.route("/allpasswords").get(verifyJWT, getallPasswords);
-router.route("/getpassword/:passwordID").get(verifyJWT, getPassword);
+router.route("/getpassword/:passwordID").post(verifyJWT, getPassword);
 
 //FRONTEND ROUTES TESTING
 router.route('/encryptPassword').post(encryptPassword);

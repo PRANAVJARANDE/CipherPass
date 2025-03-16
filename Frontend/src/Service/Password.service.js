@@ -96,3 +96,42 @@ export const addPassword_Service = async ({username,websiteName,websiteURL,email
         return false;
 }
 };
+
+
+export const sanitizeKey = (key) => {
+    return key
+        .replace(/-----BEGIN [A-Z ]+-----/g, '') 
+        .replace(/-----END [A-Z ]+-----/g, '')  
+        .replace(/\r?\n|\r/g, '')               
+        .trim();                                
+};
+
+export const get_A_Password_Service = async (id, publicKey) => {
+    try {
+        const token = localStorage.getItem('accessToken'); 
+        const response = await fetch(`${backendURL}/password/getpassword/${id}`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ text: publicKey }),
+        });
+
+        const data = await response.json();
+        //console.log(data.data);
+        if (response.status === 200) return data.data;
+        else {
+            toast.error("Error fetching Password");
+            return null;
+        }
+    } catch (error) {
+        toast.error('Server Error');
+        console.error(error);
+        return false;
+    }
+};
+
+
+
+

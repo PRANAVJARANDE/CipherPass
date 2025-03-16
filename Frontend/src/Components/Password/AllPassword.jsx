@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Dashboard from "../Dashboard";
 import { useNavigate } from "react-router-dom";
 import { getAllPasswords_Service } from "../../Service/Password.service";
+import Loading from '../Loading/Loading.jsx'
 
 function AllPassword() {
     const [passwords, setPasswords] = useState([]);
@@ -9,7 +10,6 @@ function AllPassword() {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getAllPasswords_Service();
-           
             setPasswords(data);
         };
         fetchData();
@@ -18,8 +18,9 @@ function AllPassword() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#1B1F3B] to-[#4D869C] text-[#F5F7FA] flex flex-col">
             <Dashboard />
+            {passwords.length>0 ? ( 
             <div className="flex flex-wrap justify-center gap-8 p-8">
-                {passwords.length > 0 ? (
+                {
                     passwords.map((item, index) => (
                         <div
                             key={index}
@@ -44,10 +45,13 @@ function AllPassword() {
                             </a>
                         </div>
                     ))
-                ) : (
-                    <p className="text-xl text-center w-full">No passwords found.</p>
-                )}
+                }
             </div>
+            ) : (
+                <>
+                    <Loading/>
+                </>
+            )}
         </div>
     );
 }
