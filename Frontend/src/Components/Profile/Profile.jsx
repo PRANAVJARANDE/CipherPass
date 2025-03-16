@@ -1,11 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-//import { setPrivateKey } from '../../Features/storeslice.js';
-//import { Eye, EyeOff } from 'lucide-react'; 
+import { setPrivateKey } from '../../Features/todoslice.js';
+
+import { Eye, EyeOff } from 'lucide-react'; 
 import Dashboard from '../Dashboard';
-//import { getMyProfile } from '../../Service/Auth.service';
 import Loading from '../Loading/Loading.jsx';
+import { getMyProfile } from '../../Service/Auth.service.js';
 
 function Profile() {
     const [user, setUser] = useState(null);
