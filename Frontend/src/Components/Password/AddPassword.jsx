@@ -29,7 +29,7 @@ const AddPassword = () => {
             <Dashboard />
             <div className="flex justify-center items-center min-h-screen">
                 <div className="w-full max-w-2xl bg-[#1B1F3B] p-12 rounded-2xl shadow-2xl">
-                    <h2 className="text-3xl font-bold text-white text-center mb-8">
+                    <h2 className="text-3xl font-bold  text-gray-300 text-center mb-8">
                         Add New Password
                     </h2>
                     <form onSubmit={handleSubmit} className="space-y-6">
@@ -80,7 +80,7 @@ const AddPassword = () => {
                         />
                         <button
                             type="submit"
-                            className="w-full bg-blue-600 text-white p-4 text-lg font-semibold rounded-xl hover:bg-blue-700 transition duration-300"
+                            className="w-full px-6 py-3 bg-[#3A7CA5] text-white rounded-lg shadow-lg shadow-[#3A7CA5]/50 hover:bg-[#81c3d7] transition-all transform hover:scale-105"
                         >
                             Add Password
                         </button>

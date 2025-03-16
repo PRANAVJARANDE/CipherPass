@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { checkisloggedIn, logoutUser } from "../Service/Auth.service.js";
 import { useNavigate, NavLink } from "react-router-dom";
-
+import { FaShieldAlt } from "react-icons/fa";
 
 function Dashboard() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,10 +27,13 @@ function Dashboard() {
       };
 
     return (
-        <nav className="w-full flex justify-between items-center px-8 py-4 bg-[#1B1F3B]/80 backdrop-blur-md border-b border-[#4D869C] shadow-md">
-        <h1 className="text-3xl font-extrabold tracking-wide text-white">
-          Cipher<span className="text-[#81c3d7]">Pass</span>
-        </h1>
+        <nav className="w-full flex justify-between items-center px-5 py-3 bg-[#1B1F3B]/80 backdrop-blur-md border-b border-[#4D869C] shadow-md">
+         <div className="flex items-center space-x-2">
+            <FaShieldAlt className="text-[#81c3d7] text-3xl cursor-pointer hover:scale-110 transition-transform" />
+            <h1 className="text-2xl font-extrabold tracking-wide text-white">
+            Cipher<span className="text-[#81c3d7]">Pass</span>
+            </h1>
+         </div>
 
         <div className="flex space-x-8 text-lg font-medium">
           {navItems.map((item, index) => (
