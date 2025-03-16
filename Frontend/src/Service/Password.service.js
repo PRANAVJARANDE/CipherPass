@@ -1,6 +1,6 @@
 import { toast } from 'react-hot-toast';
-
 const backendURL = import.meta.env.VITE_BACKEND_URL;
+import forge from "node-forge";
 
 export const getAllPasswords_Service = async () => {
     try {
@@ -59,7 +59,33 @@ const encryptPassword = async (password) => {
         );
         return btoa(String.fromCharCode(...new Uint8Array(encrypted))); 
     } catch (error) {
-        console.error("Encryption Error:", error);
+        return null;
+    }
+};
+
+
+export const importPrivateKey = (privateKeyPem) => {
+    try {
+        if (!privateKeyPem.includes("-----BEGIN RSA PRIVATE KEY-----")) {
+            throw new Error("Invalid Private Key Format");
+        }
+        const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
+        return privateKey;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const decryptPassword = (encryptedPassword, privateKeyPem) => {
+    try {
+        const privateKey = importPrivateKey(privateKeyPem);
+        const encryptedBytes = forge.util.decode64(encryptedPassword);
+        const encryptedBuffer = forge.util.createBuffer(encryptedBytes, "raw");
+        const decryptedPassword = privateKey.decrypt(encryptedBuffer.getBytes(), "RSA-OAEP", {
+            md: forge.md.sha256.create(), 
+        });
+        return decryptedPassword;
+    } catch (error) {
         return null;
     }
 };
@@ -68,7 +94,6 @@ export const addPassword_Service = async ({username,websiteName,websiteURL,email
     try {
         const token = localStorage.getItem('accessToken');
         const encryptedpassword=await encryptPassword(password);  
-        console.log(encryptedpassword);
         const userData={encryptedpassword,username,websiteName,websiteURL,email};
         const response = await fetch(`${backendURL}/password/addpassword`, {
             method: 'POST',
@@ -97,7 +122,6 @@ export const addPassword_Service = async ({username,websiteName,websiteURL,email
 }
 };
 
-
 export const sanitizeKey = (key) => {
     return key
         .replace(/-----BEGIN [A-Z ]+-----/g, '') 
@@ -106,7 +130,7 @@ export const sanitizeKey = (key) => {
         .trim();                                
 };
 
-export const get_A_Password_Service = async (id, publicKey) => {
+export const get_A_Password_Service = async (id, publicKey,privateKey) => {
     try {
         const token = localStorage.getItem('accessToken'); 
         const response = await fetch(`${backendURL}/password/getpassword/${id}`, {
@@ -119,15 +143,15 @@ export const get_A_Password_Service = async (id, publicKey) => {
         });
 
         const data = await response.json();
-        //console.log(data.data);
-        if (response.status === 200) return data.data;
+        const {encryptedPassword,websiteName,websiteURL,username,email}=data.data;
+        const password=decryptPassword(encryptedPassword,privateKey);
+        if (response.status === 200) return {password,websiteName,websiteURL,username,email};
         else {
             toast.error("Error fetching Password");
             return null;
         }
     } catch (error) {
         toast.error('Server Error');
-        console.error(error);
         return false;
     }
 };

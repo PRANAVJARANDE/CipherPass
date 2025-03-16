@@ -2,14 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import forge from "node-forge";
 
 
-const generateKeyPair = () => 
-{
-    const { privateKey, publicKey } = forge.pki.rsa.generateKeyPair(2048);
-    return {
-        privateKey: forge.pki.privateKeyToPem(privateKey),
-        publicKey: forge.pki.publicKeyToPem(publicKey),
-    };
+const generateKeyPair = () => {
+    const keyPair = forge.pki.rsa.generateKeyPair({ bits: 2048 });
+    const privateKeyPem = forge.pki.privateKeyToPem(keyPair.privateKey);
+    const publicKeyPem = forge.pki.publicKeyToPem(keyPair.publicKey);
+
+    return { privateKey: privateKeyPem, publicKey: publicKeyPem };
 };
+
 
 const generatePublicKey = (privateKeyPem) => 
 {
