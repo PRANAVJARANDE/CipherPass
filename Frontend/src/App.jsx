@@ -9,6 +9,7 @@ import Profile from './Components/Profile/Profile.jsx'
 import AllPassword from './Components/Password/AllPassword.jsx';
 import AddPassword from './Components/Password/AddPassword.jsx';
 import PasswordDetail from './Components/PasswordDetail/PasswordDetail.jsx';
+import PrivateKey from './Components/PrivateKey/PrivateKey.jsx';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/passwords" element={<AllPassword />} />
         <Route path="/add_password" element={<AddPassword/>} />
         <Route path="/passwords/:id" element={<PasswordDetail />} />
+        <Route path="/private-key" element={<PrivateKey />} />
       </Routes>
     </Router>
   );

@@ -15,8 +15,8 @@ function Dashboard() {
         ...(isLoggedIn ? [
             { name: "Home", path: "/" },
             { name: "All Passwords", path: "/passwords" },
-            { name: "Add Password", path: "/add_password" },
-            { name: "Profile", path: "/profile" }
+            { name: "Profile", path: "/profile" },
+            { name: "PrivateKey", path: "/private-key" }
         ] : []), 
     ];
 
@@ -43,8 +43,8 @@ function Dashboard() {
               className={({ isActive }) =>
                 `transition-all duration-300 transform hover:scale-105 hover:text-[#81c3d7] ${
                   isActive
-                    ? "text-[#81c3d7] font-bold border-b-4 border-[#81c3d7] pb-1"
-                    : "text-white"
+                    ? "text-[#81c3d7] font-semibold border-b-4 border-[#81c3d7] pb-1"
+                    : "text-white font-normal"
                 }`
               }
             >
