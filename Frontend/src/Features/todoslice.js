@@ -19,10 +19,13 @@ export const keySlice = createSlice({
     name: "keys",
     initialState,
     reducers: {
-        regeneratePrivateKey: (state, action) => {
-            const { privateKey, publicKey } = generateKeyPair();
-            state.privateKey=privateKey;
-            state.publicKey=publicKey;
+        regeneratePrivateKey: (state) => {
+            const newKeys = generateKeyPair();
+            return {
+                ...state,
+                privateKey: newKeys.privateKey,
+                publicKey: newKeys.publicKey,
+            };
         },
     },
 });

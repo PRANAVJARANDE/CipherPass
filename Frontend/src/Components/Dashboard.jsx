@@ -14,7 +14,7 @@ function Dashboard() {
     const navItems = [
         ...(isLoggedIn ? [
             { name: "Home", path: "/" },
-            { name: "All Passwords", path: "/passwords" },
+            { name: "Passwords", path: "/passwords" },
             { name: "Keys", path: "/keys" },
             { name: "Profile", path: "/profile" },
         ] : []), 
