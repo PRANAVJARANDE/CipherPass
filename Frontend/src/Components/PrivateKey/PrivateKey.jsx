@@ -1,11 +1,12 @@
 import { useState , useRef} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPrivateKey } from "../../Features/todoslice.js";
 import { EyeIcon, EyeSlashIcon, PencilIcon } from "@heroicons/react/24/outline"; 
 import Dashboard from "../Dashboard.jsx";
+import toast from "react-hot-toast";
+import { sanitizeKey } from "../../Service/Password.service.js";
 
 const PrivateKey = () => {
-  const storedKey = useSelector((state) => state.privateKey); // Get private key from Redux
+  const storedKey = useSelector((state) => sanitizeKey(state.privateKey)); // Get private key from Redux
   const [privateKey, setKey] = useState(storedKey || ""); // Initialize with stored key
   const [isEditing, setIsEditing] = useState(false); // Track edit mode
   const dispatch = useDispatch();
@@ -24,12 +25,12 @@ const PrivateKey = () => {
   const handleSave = (e) => {
     e.preventDefault();
     if (!privateKey.trim()) {
-      alert("Private key cannot be empty!");
+      toast.error("Private key cannot be empty!");
       return;
     }
-    dispatch(setPrivateKey(privateKey));
-    alert("Private Key Saved Successfully!");
-    setIsEditing(false); // Lock input after saving
+    //dispatch(setPrivateKey(privateKey));
+    toast.success("Private Key Saved Successfully!");
+    setIsEditing(false); 
   };
 
   return (

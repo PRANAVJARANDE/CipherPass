@@ -15,8 +15,8 @@ function Dashboard() {
         ...(isLoggedIn ? [
             { name: "Home", path: "/" },
             { name: "All Passwords", path: "/passwords" },
+            { name: "Keys", path: "/keys" },
             { name: "Profile", path: "/profile" },
-            { name: "PrivateKey", path: "/private-key" }
         ] : []), 
     ];
 
@@ -35,7 +35,7 @@ function Dashboard() {
             </h1>
          </div>
 
-        <div className="flex space-x-8 text-lg font-medium">
+        <div className="flex space-x-16 text-xl font-medium">
           {navItems.map((item, index) => (
             <NavLink
               key={index}

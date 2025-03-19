@@ -24,7 +24,7 @@ function App() {
         <Route path="/passwords" element={<AllPassword />} />
         <Route path="/add_password" element={<AddPassword/>} />
         <Route path="/passwords/:id" element={<PasswordDetail />} />
-        <Route path="/private-key" element={<PrivateKey />} />
+        <Route path="/keys" element={<PrivateKey />} />
       </Routes>
     </Router>
   );
