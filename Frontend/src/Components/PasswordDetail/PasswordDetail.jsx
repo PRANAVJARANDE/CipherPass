@@ -40,37 +40,53 @@ const PasswordDetail = () => {
   }, [id, publicKey]);
 
   return (
-    <div className="password-detail">
+    <div className="min-h-screen bg-gradient-to-br from-[#1B1F3B] to-[#4D869C] text-[#F5F7FA] flex flex-col items-center">
       <Dashboard />
-      {loading ? (
-        <p>Loading password details...</p>
-      ) : error ? (
-        <p style={{ color: "red" }}>{error}</p>
-      ) : passwordData ? (
-        <>
-          <h2>Website: {passwordData.websiteName}</h2>
-          <p>
-            URL:{" "}
-            <a href={passwordData.websiteURL} target="_blank" rel="noopener noreferrer">
-              {passwordData.websiteURL}
-            </a>
-          </p>
-          <p>
-            <strong>Username:</strong> {passwordData.username}
-          </p>
-          <p>
-            <strong>Email:</strong> {passwordData.email}
-          </p>
-          <p>
-            <strong>Password:</strong> {passwordData.password}
-          </p>
-          <p>
-            <strong>ID:</strong> {passwordData._id}
-          </p>
-        </>
-      ) : (
-        <p>Password details not found</p>
-      )}
+       
+        {loading ? (
+          <p className="text-center">Loading password details...</p>
+        ) : error ? (
+          <p className="text-center text-red-500">{error}</p>
+        ) : passwordData ? (
+          <div className="relative mt-12 bg-opacity-30 backdrop-blur-lg p-14 rounded-2xl shadow-xl border border-gray-300/40 w-[600px] text-center">
+           
+          <div className="bg-white/10 p-6 rounded-lg shadow-lg space-y-4 text-left">
+              <div className="flex items-center border-b border-gray-300/40 pb-2">
+              <p><strong>Website name:</strong> {passwordData.websiteName}</p>
+
+              </div>
+              <div className="flex items-center border-b border-gray-300/40 pb-2">
+              <p>
+                <strong>Website URL:</strong>
+                <a
+                  href={passwordData.websiteURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white hover:underline ml-1"
+                >
+                  {passwordData.websiteURL}
+                </a>
+              </p>
+
+              </div>
+              <div className="flex items-center border-b border-gray-300/40 pb-2">
+              <p><strong>Username:</strong> {passwordData.username}</p>
+              </div>
+              <div className="flex items-center border-b border-gray-300/40 pb-2">
+              <p><strong>Email:</strong> {passwordData.email}</p>
+
+              </div>
+              <div className="flex items-center border-b border-gray-300/40 pb-2">
+              <p><strong>Password:</strong> {passwordData.password}</p>
+              </div>
+             
+              
+          </div>
+      </div>
+        ) : (
+          <p className="text-center">Password details not found</p>
+        )}
+      
     </div>
   );
 };
