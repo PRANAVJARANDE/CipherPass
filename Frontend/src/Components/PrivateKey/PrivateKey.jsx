@@ -1,90 +1,61 @@
-import { useState , useRef} from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPrivateKey } from "../../Features/todoslice.js";
-import { EyeIcon, EyeSlashIcon, PencilIcon } from "@heroicons/react/24/outline"; 
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Dashboard from "../Dashboard.jsx";
+import toast from "react-hot-toast";
+import { regeneratePrivateKey } from "../../Features/todoslice.js";
 
 const PrivateKey = () => {
-  const storedKey = useSelector((state) => state.privateKey); // Get private key from Redux
-  const [privateKey, setKey] = useState(storedKey || ""); // Initialize with stored key
-  const [isEditing, setIsEditing] = useState(false); // Track edit mode
+  const privateKey = useSelector((state) => state.privateKey);
+  const publicKey = useSelector((state) => state.publicKey);
+  const [showPrivateKey, setShowPrivateKey] = useState(false);
+  const [showPublicKey, setShowPublicKey] = useState(false);
   const dispatch = useDispatch();
-  const [showKey, setShowKey] = useState(false);
-  const inputRef = useRef(null);
 
-  const handleEdit = () => {
-    setIsEditing(true);
-    setTimeout(() => {
-      inputRef.current.focus();
-      inputRef.current.select(); // Auto-select text
-    }, 100);
+  const changeKeys = () => {
+    dispatch(regeneratePrivateKey());
+    toast.success("Keys Changed Successfully!");
   };
-
-
-  const handleSave = (e) => {
-    e.preventDefault();
-    if (!privateKey.trim()) {
-      alert("Private key cannot be empty!");
-      return;
-    }
-    dispatch(setPrivateKey(privateKey));
-    alert("Private Key Saved Successfully!");
-    setIsEditing(false); // Lock input after saving
-  };
+  const getMaskedKey = (key, show) => (show ? key : "**************************************************************************************\n".repeat(27));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1B1F3B] to-[#4D869C] text-[#F5F7FA] flex flex-col">
       <Dashboard />
-
-      <div className="flex justify-center items-center min-h-screen mt-[-80px] ">
-
-        <div className="bg-gray-800 p-6 rounded-2xl shadow-lg w-[60rem] max-w-full mx-auto h-auto min-h-[18rem] border border-[#4D869C]">
-          <h2 className="text-2xl font-semibold text-center mb-4">Your Private Key</h2>
-          <p className="text-gray-400 text-lg text-center mb-4">
-            Please enter your private key to access your passwords.
-          </p>
-          <form onSubmit={handleSave} className="relative">
-            <div className="flex items-center border rounded-lg bg-gray-700 p-3 mb-2">
-              <input
-                ref={inputRef}
-                type={showKey ? "text" : "password"}
-                placeholder="Enter your private key"
-                value={privateKey}
-                readOnly={!isEditing}
-                onChange={(e) => setKey(e.target.value)}
-                className="w-full bg-transparent text-white outline-none"
-              />
-              {/* Toggle Visibility Button */}
-              <button
-                type="button"
-                onClick={() => setShowKey(!showKey)}
-                className="text-gray-400 hover:text-white ml-2"
-              >
-                {showKey ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
+      <div className="flex flex-col justify-center items-center min-h-screen px-6 py-10">
+        <div className="flex flex-wrap gap-6 w-full max-w-8xl">
+          <div className="flex-1 bg-gray-800 p-6 rounded-2xl shadow-lg min-h-[24rem] border border-[#4D869C]">
+            <h2 className="text-2xl font-semibold text-center mb-4">Your Private Key</h2>
+            <div className="relative">
+              <textarea type={showPrivateKey ? "text" : "password"} value={getMaskedKey(privateKey, showPrivateKey)} readOnly rows={28}
+                className="w-full bg-gray-700 text-white p-3 rounded-lg outline-none resize-none"/>
+              <button type="button" onClick={() => setShowPrivateKey(!showPrivateKey)}
+                className="absolute top-3 right-3 text-gray-400 hover:text-white">
+                {showPrivateKey ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
               </button>
-              {/* Edit Button */}
-              {!isEditing && (
-                <button
-                  type="button"
-                  onClick={handleEdit}
-                  className="text-gray-400 hover:text-white ml-2"
-                >
-                  <PencilIcon className="w-5 h-5" />
-                </button>
-              )}
             </div>
-            {isEditing && (
-              <button
-                type="submit"
-                className="w-full mt-3 px-6 py-3 bg-[#3A7CA5] text-white rounded-lg shadow-lg shadow-[#3A7CA5]/50 hover:bg-[#81c3d7] transition-all transform hover:scale-105 placeholder-gray-400 placeholder-opacity-50"
-              >
-                Save
+          </div>
+
+          <div className="flex-1 bg-gray-800 p-6 rounded-2xl shadow-lg min-h-[24rem] border border-[#4D869C]">
+            <h2 className="text-2xl font-semibold text-center mb-4">Your Public Key</h2>
+            <div className="relative">
+              <textarea type={showPublicKey ? "text" : "password"} value={getMaskedKey(publicKey, showPublicKey)} readOnly rows={28}
+                className="w-full bg-gray-700 text-white p-3 rounded-lg outline-none resize-none"/>
+              <button type="button" onClick={() => setShowPublicKey(!showPublicKey)}
+                className="absolute top-3 right-3 text-gray-400 hover:text-white">
+                {showPublicKey ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
               </button>
-            )}
-          </form>
+            </div>
+          </div>
         </div>
       </div>
+      <button
+        onClick={changeKeys}
+        className=" mt-1 mx-20 mb-10 bg-[#082d3c] text-white px-6 py-3 rounded-lg shadow-lg hover:bg-[#3B6F87] transition-all  max-w-full text-lg font-semibold"
+      >
+        Change Keys
+      </button>
     </div>
+    
   );
 };
 
