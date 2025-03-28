@@ -3,13 +3,13 @@ import { useParams } from "react-router-dom";
 import Dashboard from "../Dashboard";
 import { get_A_Password_Service, sanitizeKey, updatePassword_Service } from "../../Service/Password.service";
 import { useSelector } from "react-redux";
-import { FaEdit } from "react-icons/fa"; // Import edit icon
+import { FaEdit } from "react-icons/fa"; 
+import Loading from '../Loading/Loading.jsx'
 
 const PasswordDetail = () => {
   const { id } = useParams();
   const [passwordData, setPasswordData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState({});
   const [editedData, setEditedData] = useState({});
 
@@ -18,29 +18,14 @@ const PasswordDetail = () => {
 
   useEffect(() => {
     const fetchPassword = async () => {
-      if (!publicKey) {
-        setError("Public key is missing");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const response = await get_A_Password_Service(id, publicKey, privateKey);
-        if (response) {
-          setPasswordData(response);
-          setEditedData(response);
-        } else {
-          setError("Password details not found");
-        }
-      } catch (error) {
-        console.error("Error fetching password:", error);
-        setError("Failed to fetch password details");
-      } finally {
-        setLoading(false);
-      }
+      const response = await get_A_Password_Service(id, publicKey, privateKey);
+      if (response) {
+        setPasswordData(response);
+        setEditedData(response);
+      } 
     };
     fetchPassword();
-  }, [id, publicKey]);
+  }, []);
 
   const handleEditClick = (field) => {
     setIsEditing((prev) => ({ ...prev, [field]: true }));
@@ -66,7 +51,9 @@ const PasswordDetail = () => {
       <Dashboard />
 
       {loading ? (
-        <p className="text-center">Loading password details...</p>
+        <p className="text-center">
+          <Loading/>
+        </p>
       ) : error ? (
         <p className="text-center text-red-500">{error}</p>
       ) : passwordData ? (
