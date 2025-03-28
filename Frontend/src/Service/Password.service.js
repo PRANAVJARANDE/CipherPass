@@ -172,7 +172,7 @@ export const updatePassword_Service = async (userData) => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             },
-            body: JSON.stringify(userData),
+            body: JSON.stringify(toPass),
         });
         
         if (response?.status === 201) 
@@ -188,7 +188,7 @@ export const updatePassword_Service = async (userData) => {
         }
     } catch (error) {
         toast.error('Server Error');
-        console.error(error);
+        console.error("Request failed:", error);
         return false;
 }
 };
