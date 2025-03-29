@@ -53,7 +53,7 @@ function AllPassword() {
             )}
             <button
                 onClick={() => navigate("/add_password")}
-                className="fixed bottom-8 right-8 bg-[#1B1F3B] hover:bg-[#3A7CA5] text-white text-3xl font-bold w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-all transform hover:scale-110"
+                className="fixed bottom-8 right-8 bg-[#1B1F3B] hover:bg-[#1b3d53] shadow-lg shadow-[#082d3c]/50 text-white text-3xl font-bold w-16 h-16 rounded-full flex items-center justify-center transition-all transform hover:scale-110"
             >
                 <PlusIcon className="w-10 h-10 stroke-2" />  
             </button>

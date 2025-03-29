@@ -158,6 +158,7 @@ export const get_A_Password_Service = async (id, publicKey,privateKey) => {
 
 export const updatePassword_Service = async (userData) => {
     try {
+  
         const token = localStorage.getItem('accessToken');
         const {password,username,websiteName,websiteURL,email,id}=userData;
         const toPass={};
@@ -166,8 +167,10 @@ export const updatePassword_Service = async (userData) => {
         if(websiteName)toPass.websiteName=websiteName;
         if(websiteURL)toPass.websiteURL=websiteURL;
         if(email)toPass.email=email;
+
+
         const response = await fetch(`${backendURL}/password/updatePassword/${id}`, {
-            method: 'POST',
+            method: 'PATCH',
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
@@ -175,10 +178,12 @@ export const updatePassword_Service = async (userData) => {
             body: JSON.stringify(toPass),
         });
         
-        if (response?.status === 201) 
+
+        if (response?.status === 201 || response?.status === 200) 
         {
-            toast.success("Password Updated");
-            return true;
+            const updatedData = await response.json();
+            toast.success("Updated Successfully");
+            return updatedData;
         }
         else 
         {
@@ -192,3 +197,6 @@ export const updatePassword_Service = async (userData) => {
         return false;
 }
 };
+
+
+
