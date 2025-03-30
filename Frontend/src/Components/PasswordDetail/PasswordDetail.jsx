@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Dashboard from "../Dashboard";
 import { get_A_Password_Service, sanitizeKey, updatePassword_Service } from "../../Service/Password.service";
 import { useSelector } from "react-redux";
 import Loading from '../Loading/Loading.jsx'
 import { FiEdit } from "react-icons/fi";
+import Footer from "../Footer.jsx";
+import { IoArrowBack } from "react-icons/io5"; 
 
 const PasswordDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate(); 
   const [passwordData, setPasswordData] = useState(null);
   const [isEditing, setIsEditing] = useState({});
   const [editedData, setEditedData] = useState({});
@@ -56,21 +59,29 @@ const PasswordDetail = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1B1F3B] to-[#4D869C] text-[#F5F7FA] flex flex-col items-center">
       <Dashboard />
+      <div className="relative flex-grow flex flex-col items-center w-full">
+      <button
+        onClick={() => navigate("/passwords")}  
+        className="absolute top-6 left-6 flex items-center gap-2 bg-[#4D869C] text-white px-4 py-2 rounded-full shadow-md hover:bg-[#7496a3]  transition-all transform hover:scale-105"
+      >
+        <IoArrowBack size={25} />
+        
+      </button>
 
       {passwordData ? (
-        <div className="relative mt-12 bg-opacity-30 backdrop-blur-lg p-14 rounded-2xl shadow-xl border border-gray-300/40 w-[600px] text-center">
-          <div className="bg-white/10 p-6 rounded-lg shadow-lg space-y-4 text-left">
+        <div className="relative mt-12 bg-opacity-30 backdrop-blur-lg p-16 rounded-2xl shadow-xl border border-gray-300/40 w-[800px] text-center min-h-[500px] flex flex-col">
+          <div className="bg-white/10 p-8 rounded-lg shadow-lg space-y-4 text-left flex flex-col flex-grow justify-between">
             {["websiteName", "websiteURL", "username", "email", "password"].map((field) => (
               <div key={field} className="flex items-center justify-between border-b border-gray-300/40 pb-2">
                 <div className="flex-1">
-                  <p>
+                  <p className="text-lg">
                     <strong>{fieldLabels[field]} :</strong>{" "}
                     {isEditing[field] ? (
                       <input
                         type={field === "password" ? "password" : "text"}
                         value={editedData[field]}
                         onChange={(e) => handleChange(field, e.target.value)}
-                        className="ml-2 px-2 py-1 text-black rounded-md"
+                        className="ml-2 px-2 py-1 text-black text-lg rounded-md"
                       />
                     ) : (
                       <span>{passwordData[field]}</span>
@@ -98,7 +109,10 @@ const PasswordDetail = () => {
               <Loading/>
           </>
       )}
+      </div>
+      <Footer/>
     </div>
+    
   );
 };
 

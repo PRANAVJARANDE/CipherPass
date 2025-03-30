@@ -15,7 +15,7 @@ function Hero() {
                 <img 
                     src="/passimage.png" 
                     alt="Security Illustration"
-                    className="my-20 w-[500px] h-auto rounded-lg "
+                    className="mt-20 w-[500px] h-auto rounded-lg "
                 />
                 <div className="my-20 mb-40 text-gray-300 max-w-5xl text-2xl text-center">
                     <h2 className="text-4xl font-bold text-[#81c3d7] pb-4">Why is CipherPass Secure?</h2>

@@ -199,4 +199,29 @@ export const updatePassword_Service = async (userData) => {
 };
 
 
+// export const delete_A_Password_Service = async (id) => {
+//     try {
+//         const token = localStorage.getItem('accessToken');
+//         const response = await fetch(`${backendURL}/password/deletePassword/${id}`, {
+//             method: 'DELETE',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${token}`,
+//             },
+//         });
+
+//         const data = await response.json();
+
+//         if (response.status === 200) {
+//             toast.success("Password deleted successfully");
+//             return data;
+//         } else {
+//             toast.error("Error deleting password");
+//             return null;
+//         }
+//     } catch (error) {
+//         toast.error("Server Error");
+//         return false;
+//     }
+// };
 
