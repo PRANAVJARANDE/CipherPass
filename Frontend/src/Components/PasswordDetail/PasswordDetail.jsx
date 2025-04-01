@@ -98,7 +98,7 @@ const PasswordDetail = () => {
           {Object.values(isEditing).some((value) => value) && (
             <button
               onClick={handleSave}
-              className="mt-4 bg-[#082d3c] hover:bg-[#81c3d7] shadow-lg shadow-[#082d3c]/50  text-white font-bold py-2 px-6 rounded-lg  w-full max-w-[500px]"
+              className="mt-4 bg-[#082d3c] hover:bg-[#81c3d7] shadow-lg shadow-[#082d3c]/50  text-white font-bold py-2 px-6 rounded-lg  w-full max-w-[800px]"
             >
               Save Changes
             </button>
