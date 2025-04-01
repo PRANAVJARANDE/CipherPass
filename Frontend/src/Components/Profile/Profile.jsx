@@ -25,7 +25,7 @@ function Profile() {
             <Dashboard />
 
             {user ? (
-                <div className="relative mt-12 bg-opacity-30 backdrop-blur-lg p-14 rounded-2xl shadow-xl border border-gray-300/40 w-[600px] text-center">
+                <div className="relative mt-16 bg-opacity-30 backdrop-blur-lg p-8 sm:p-10 md:p-14 rounded-2xl shadow-xl border border-gray-300/40 w-[90%] sm:w-[80%] md:w-[600px] lg:w-[800px] text-center">
                     <div className="bg-white/10 p-6 rounded-lg shadow-lg space-y-4 text-left">
                         <div className="flex items-center border-b border-gray-300/40 pb-2">
                             <span className="text-lg font-medium text-gray-200">Email:</span>
@@ -74,6 +74,5 @@ function Profile() {
         </div>
     );
 }
-
 
 export default Profile;

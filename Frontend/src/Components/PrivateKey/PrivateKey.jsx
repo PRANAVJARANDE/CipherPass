@@ -26,7 +26,7 @@ const PrivateKey = () => {
       <Dashboard />
 
       <div className="flex-grow flex flex-col justify-center items-center px-6 py-10">
-        <div className="flex flex-wrap gap-6 w-full max-w-8xl">
+        <div className="flex flex-col sm:flex-row gap-6 w-full max-w-8xl">
           <div className="flex-1 bg-gray-800 p-6 rounded-lg shadow-lg min-h-[24rem] border border-[#4D869C]">
             <h2 className="text-2xl font-semibold text-center mb-4">Your Private Key</h2>
             <div className="relative">
