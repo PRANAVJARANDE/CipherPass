@@ -1,6 +1,6 @@
 # CipherPass
 
-![CipherPass Logo](/Frontend/public/logo.png)
+![CipherPass Logo](/Frontend/public/Cipherpasslogo.png)
 
 ## Live Link  
 [https://cipherpass-frontend.onrender.com/](https://cipherpass-frontend.onrender.com/)  
