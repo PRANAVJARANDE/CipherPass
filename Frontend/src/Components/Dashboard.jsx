@@ -2,17 +2,21 @@ import React, { useEffect, useState } from "react";
 import { checkisloggedIn, logoutUser } from "../Service/Auth.service.js";
 import { useNavigate, NavLink } from "react-router-dom";
 import { FaShieldAlt } from "react-icons/fa";
-import { FiMenu } from "react-icons/fi"; // Import menu icon for hamburger menu
-import { RiCloseFill } from "react-icons/ri"; // Import close icon
+import { FiMenu } from "react-icons/fi"; 
+import { RiCloseFill } from "react-icons/ri"; 
 
 function Dashboard() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false); // state to toggle the menu
+    const [isMenuOpen, setIsMenuOpen] = useState(false); 
     const navigate = useNavigate();
 
     useEffect(() => {
-        setIsLoggedIn(checkisloggedIn());
-    }, []);
+      const verifyLoginStatus = async () => {
+          const loggedIn = await checkisloggedIn(); 
+          setIsLoggedIn(loggedIn);
+      };
+      verifyLoginStatus();
+  }, []);
 
     const navItems = [
         ...(isLoggedIn ? [
@@ -39,7 +43,7 @@ function Dashboard() {
                 </h1>
             </div>
 
-            {/* Nav Links - Visible on larger screens */}
+            
             <div className="hidden md:flex space-x-16 text-xl font-medium">
                 {navItems.map((item, index) => (
                     <NavLink
@@ -58,7 +62,7 @@ function Dashboard() {
                 ))}
             </div>
 
-            {/* Logout/Login Button */}
+            
             <div className="hidden md:block">
                 {isLoggedIn ? (
                     <button
@@ -77,7 +81,7 @@ function Dashboard() {
                 )}
             </div>
 
-            {/* Hamburger menu for small screens */}
+            
             <div className="md:hidden flex items-center">
                 <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
                     {isMenuOpen ? (
@@ -88,7 +92,7 @@ function Dashboard() {
                 </button>
             </div>
 
-            {/* Mobile menu */}
+            
             {isMenuOpen && (
                 <div className="absolute top-12 right-0 w-auto bg-[#1B1F3B] p-4 rounded-lg shadow-lg md:hidden z-50">
                     <div className="flex flex-col space-y-4 text-left text-lg">
@@ -96,7 +100,7 @@ function Dashboard() {
                             <NavLink
                                 key={index}
                                 to={item.path}
-                                onClick={() => setIsMenuOpen(false)} // Close menu on item click
+                                onClick={() => setIsMenuOpen(false)} 
                                 className={({ isActive }) =>
                                     `transition-all duration-300 transform hover:scale-105 hover:text-[#81c3d7] ${
                                         isActive
