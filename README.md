@@ -3,7 +3,7 @@
 ![CipherPass Logo](/Frontend/public/Cipherpasslogo.png)
 
 ## Live Link  
-[https://cipherpass-frontend.onrender.com/](https://cipherpass-frontend.onrender.com/)  
+[https://cipherpass.onrender.com/](https://cipherpass.onrender.com/)  
 
 ## Overview  
 CipherPass is a **secure password management application** that encrypts and stores user credentials, ensuring they remain protected and accessible only to authorized user.  
@@ -25,15 +25,17 @@ With **end-to-end encryption (E2EE)**, CipherPass is a highly secure and privacy
 
 
 ## ✨ Features  
-✅ **Secure Password Storage** – Uses **RSA encryption** for storing and retrieving passwords securely.  
-✅ **User Authentication** – Secure **login & registration** with **JWT**  
-✅ **Edit & Delete Passwords** – Manage stored passwords securely  
-✅ **Forgot Password Recovery** – Reset passwords via **email** (using **NodeMailer**)
-✅ **Client-Side Key Management** – Users generate **strong RSA key pairs** (public & private) on their device, ensuring **zero-knowledge encryption**  
-✅ **Regenerate Keys Option** – Users can **regenerate RSA keys** anytime, improving security and control  
-✅ **Server-Side Encryption Layer** – Server **encrypts and decrypts data** using its own **secure key pair**, adding an additional **security layer**  
-✅ **End-to-End Encryption (E2EE)** – Passwords are **encrypted before leaving the client** and decrypted only when accessed securely  
-✅ **Fully Responsive UI** – Works on **all screen sizes**  
+
+- **User Authentication** – Secure **login & registration** with **JWT**  
+- **Secure Password Storage** – Uses **RSA encryption** for storing and retrieving passwords securely  
+- **End-to-End Encryption (E2EE)** – Passwords are **encrypted before leaving the client** and decrypted only when accessed securely  
+- **Client-Side Key Management** – Users generate **strong RSA key pairs** (public & private) on their device, ensuring **zero-knowledge encryption**  
+- **Server-Side Encryption Layer** – Server **encrypts and decrypts data** using its own **secure key pair**, adding an additional **security layer**  
+- **Regenerate Keys Option** – Users can **regenerate RSA keys** anytime, improving security and control  
+- **Update & Delete Passwords** – Manage stored passwords securely  
+- **Forgot Password Recovery** – Reset passwords via **email** using **NodeMailer**  
+- **Fully Responsive UI** – Works on **all screen sizes**  
+
 
 This ensures **maximum security** by keeping **private keys client-side** while allowing the server to manage encrypted data effectively. 🚀
 
