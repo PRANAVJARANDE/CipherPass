@@ -1,6 +1,8 @@
 # CipherPass
 
-![CipherPass Logo](/Frontend/public/Cipherpasslogo.png)
+<p align="center">
+  <img src="Frontend/public/Cipherpasslogo.png" alt="CipherPass Logo" width="100%">
+</p>
 
 ## Live Link  
 [https://cipherpass.onrender.com/](https://cipherpass.onrender.com/)  
