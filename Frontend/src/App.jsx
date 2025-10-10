@@ -10,8 +10,26 @@ import AllPassword from './Components/Password/AllPassword.jsx';
 import AddPassword from './Components/Password/AddPassword.jsx';
 import PasswordDetail from './Components/PasswordDetail/PasswordDetail.jsx';
 import PrivateKey from './Components/PrivateKey/PrivateKey.jsx';
+import toast from "react-hot-toast";
+import { regeneratePrivateKey } from './Features/todoslice.js';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 function App() {
+  const dispatch = useDispatch();
+  const changeKeys = () => {
+    dispatch(regeneratePrivateKey());
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      changeKeys();
+      toast.success("Client Keys Changed");
+    }, 5 * 60 * 1000);
+    changeKeys();
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <Router>
       <Routes>

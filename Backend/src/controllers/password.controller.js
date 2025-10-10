@@ -6,9 +6,24 @@ import crypto from "crypto";
 import fs from "fs";
 import path from 'path'
 import { fileURLToPath } from "url";
+import { getPublicKey } from "../utils/loadKeys.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+export const shareServerPublicKey = asyncHandler(async (req,res)=>{
+    try {
+    const publicKey = getPublicKey();
+    if (!publicKey)return res.status(500).json({ message: "Server public key not available" });
+    res.status(200).json({
+      publicKey,
+      message: "Server public key retrieved successfully",
+    });
+  } catch (error) {
+    console.error("[PUBLIC KEY ERROR]", error);
+    res.status(500).json({ message: "Failed to retrieve server public key" });
+  }
+});
 
 export const addPassword = asyncHandler(async (req, res) => 
 {
@@ -99,7 +114,7 @@ export const updatePassword = asyncHandler(async (req, res) => {
 export const getallPasswords=asyncHandler(async(req,res)=>{
     try {
         const userId = req.user._id;
-        const passwords = await Password.find({ user: userId }).select("websiteName websiteURL");
+        const passwords = await Password.find({ user: userId }).select("websiteName websiteURL username email");
         return res.status(200).json(new ApiResponse(200,passwords,"Passwords Fetched Successfully"));
     } catch (error) {
         console.error("Error fetching passwords:", error);
