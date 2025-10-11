@@ -7,6 +7,7 @@ import Loading from '../Loading/Loading.jsx'
 import { FiEdit } from "react-icons/fi";
 import Footer from "../Footer.jsx";
 import { IoArrowBack } from "react-icons/io5"; 
+import Analysis from "./Analysis.jsx";
 
 const PasswordDetail = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ const PasswordDetail = () => {
 
   const publicKey = useSelector((state) => sanitizeKey(state.publicKey));
   const privateKey = useSelector((state) => state.privateKey);
+
 
   useEffect(() => {
     const fetchPassword = async () => {
@@ -67,49 +69,57 @@ const PasswordDetail = () => {
         <IoArrowBack size={25} />
         
       </button>
-
-      {passwordData ? (
-        <div className="relative mt-12 bg-opacity-30 backdrop-blur-lg p-16 rounded-2xl shadow-xl border border-gray-300/40 w-[800px] text-center min-h-[500px] flex flex-col">
-          <div className="bg-white/10 p-8 rounded-lg shadow-lg space-y-4 text-left flex flex-col flex-grow justify-between">
-            {["websiteName", "websiteURL", "username", "email", "password"].map((field) => (
-              <div key={field} className="flex items-center justify-between border-b border-gray-300/40 pb-2">
-                <div className="flex-1">
-                  <p className="text-lg">
-                    <strong>{fieldLabels[field]} :</strong>{" "}
-                    {isEditing[field] ? (
-                      <input
-                        type="text"
-                        value={editedData[field]}
-                        onChange={(e) => handleChange(field, e.target.value)}
-                        className="ml-2 px-2 py-1 text-black text-lg rounded-md"
-                      />
-                    ) : (
-                      <span>{field === "password" ? "••••••••" : passwordData[field]}</span>
-                    )}
-                  </p>
-                </div>
-                <button onClick={() => handleEditClick(field)} className="ml-3 text-gray-300 hover:text-white">
-                <FiEdit className="text-gray-300 hover:text-white cursor-pointer" />
-                </button>
+        {passwordData ? (
+  <div className="flex flex-col md:flex-row w-full py-20 mt-10 px-12 items-center gap-8">
+    {/* Password Details */}
+    <div className="w-full max-w-[800px]">
+      <div className="relative bg-opacity-30 backdrop-blur-lg bg-[#1B1F3B]/80 p-8 rounded-2xl shadow-xl border border-gray-300/40 text-center min-h-[500px] flex flex-col">
+        <div className="bg-white/10 p-8 rounded-lg shadow-lg space-y-4 text-left flex flex-col flex-grow justify-between">
+          {["websiteName", "websiteURL", "username", "email", "password"].map((field) => (
+            <div key={field} className="flex items-center justify-between border-b border-gray-300/40 pb-2">
+              <div className="flex-1">
+                <p className="text-lg">
+                  <strong>{fieldLabels[field]} :</strong>{" "}
+                  {isEditing[field] ? (
+                    <input
+                      type="text"
+                      value={editedData[field]}
+                      onChange={(e) => handleChange(field, e.target.value)}
+                      className="ml-2 px-2 py-1 text-black text-lg rounded-md"
+                    />
+                  ) : (
+                    <span className="ml-2">{passwordData[field]}</span>
+                  )}
+                </p>
               </div>
-            ))}
-          </div>
-
-          {Object.values(isEditing).some((value) => value) && (
-            <button
-              onClick={handleSave}
-              className="mt-4 bg-[#082d3c] hover:bg-[#81c3d7] shadow-lg shadow-[#082d3c]/50  text-white font-bold py-2 px-6 rounded-lg  w-full max-w-[800px]"
-            >
-              Save Changes
-            </button>
-          )}
+              <button onClick={() => handleEditClick(field)} className="ml-3 text-gray-300 hover:text-white">
+                <FiEdit className="text-gray-300 hover:text-white cursor-pointer" />
+              </button>
+            </div>
+          ))}
         </div>
-      ) : (
-          <>
-              <Loading/>
-          </>
-      )}
+
+        {Object.values(isEditing).some((value) => value) && (
+          <button
+            onClick={handleSave}
+            className="mt-4 bg-[#082d3c] hover:bg-[#81c3d7] shadow-lg shadow-[#082d3c]/50 text-white font-bold py-2 px-6 rounded-lg w-full"
+          >
+            Save Changes
+          </button>
+        )}
       </div>
+    </div>
+
+    <div className="w-full max-w-[800px]">
+      <Analysis passwordData={passwordData} />
+    </div>
+    
+  </div>
+) : (
+  <Loading />
+)}
+
+            </div>
       <Footer/>
     </div>
     

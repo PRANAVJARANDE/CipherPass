@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { addPassword_Service } from "../../Service/Password.service";
 import Dashboard from "../Dashboard";
+import { useNavigate } from "react-router-dom";
 
 const AddPassword = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         websiteName: "",
@@ -21,6 +23,7 @@ const AddPassword = () => {
         const success = await addPassword_Service(formData);
         if (success) {
             setFormData({ username: "", websiteName: "", websiteURL: "", email: "", password: "" });
+            navigate("/passwords");
         }
     };
 
