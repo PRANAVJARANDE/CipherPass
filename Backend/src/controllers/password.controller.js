@@ -78,14 +78,11 @@ export const updatePassword = asyncHandler(async (req, res) => {
     try 
     {
         const passwordEntry = await Password.findById(passwordID);
-
         if (!passwordEntry) return res.status(404).json({ error: "Password entry not found" });
         if (updates.password) 
         {
             try {
-                const privateKeyPath = path.resolve(__dirname, "../Keys/privatekey.pem");
-                const privateKey = fs.readFileSync(privateKeyPath, "utf8");
-
+                const privateKey = await getPrivateKey();
                 const decryptedPassword = crypto.privateDecrypt(
                     {
                         key: privateKey,

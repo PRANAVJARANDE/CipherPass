@@ -120,10 +120,22 @@ function AllPassword() {
                         ))}
                     </div>
                 ) : (
-                    <div className="flex flex-col items-center justify-center text-center text-gray-300 h-[60vh]">
-                        <p className="text-2xl font-semibold mb-2">No passwords added yet 🔒</p>
-                        <p className="text-gray-400">Click “Add Password” below to get started.</p>
-                    </div>
+                    <div className="fixed inset-0 flex items-center justify-center ">
+  <div className="bg-[#1B1F3B] rounded-lg shadow-lg border border-[#4D869C] 
+                  flex flex-col items-center justify-center p-16 cursor-default 
+                  hover:shadow-2xl transform hover:scale-105 transition-all duration-300 text-center">
+    <p className="text-2xl font-bold text-gray-300 mb-4">No passwords added yet 🔒</p>
+    <p className="text-gray-400 mb-6">Click “Add Password” below to get started and keep your credentials safe.</p>
+    <button
+      onClick={() => navigate("/add_password")}
+      className="bg-[#1B1F3B] border border-[#4D869C] hover:bg-[#23304a] text-[#81c3d7] font-semibold py-2 px-4 rounded transition-all duration-300"
+    >
+      Add Password
+    </button>
+  </div>
+</div>
+
+
                 )}
             </div>
 
