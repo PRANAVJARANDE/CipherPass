@@ -6,14 +6,14 @@ import crypto from "crypto";
 import fs from "fs";
 import path from 'path'
 import { fileURLToPath } from "url";
-import { getPublicKey } from "../utils/loadKeys.js";
+import { getPrivateKey, getPublicKey } from "../utils/loadKeys.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const shareServerPublicKey = asyncHandler(async (req,res)=>{
     try {
-    const publicKey = getPublicKey();
+    const publicKey = await getPublicKey();
     if (!publicKey)return res.status(500).json({ message: "Server public key not available" });
     res.status(200).json({
       publicKey,
@@ -30,9 +30,7 @@ export const addPassword = asyncHandler(async (req, res) =>
     const {username,websiteName,websiteURL,encryptedpassword,email}=req.body;
     if(!encryptedpassword) return res.status(400).json(new ApiError(400, "Encrypted password is required"));
     try {
-        const privateKeyPath = path.resolve(__dirname, "../Keys/privatekey.pem");
-        const privateKey = fs.readFileSync(privateKeyPath, "utf8");
-
+        const privateKey = await getPrivateKey();
         const decryptedPassword = crypto.privateDecrypt(
             {
                 key: privateKey,
@@ -41,6 +39,8 @@ export const addPassword = asyncHandler(async (req, res) =>
             },
             Buffer.from(encryptedpassword, "base64")
         ).toString("utf8");
+
+        console.log("Decrypted password - ",decryptPassword);
 
         const newPasswordEntry = new Password({
             user:req.user._id,
