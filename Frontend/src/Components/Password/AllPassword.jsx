@@ -9,14 +9,22 @@ import Footer from "../Footer.jsx";
 
 function AllPassword() {
     const [passwords, setPasswords] = useState([]);
+    const [isLoading, setIsLoading] = useState(true); 
     const navigate = useNavigate();
 
     const [showpromt,setprompt] = useState(false);
     const [id,setid]=useState(null);
 
     const fetchPasswords = async () => {
-        const data = await getAllPasswords_Service();
-        setPasswords(data);
+        try {
+            setIsLoading(true); // start loading
+            const data = await getAllPasswords_Service();
+            setPasswords(data);
+        } catch (error) {
+            console.error("Error fetching passwords:", error);
+        } finally {
+            setIsLoading(false); // stop loading
+        }
     };
 
     useEffect(() => {
@@ -59,8 +67,10 @@ function AllPassword() {
             </div>
         </div>
             )}
-            <div className="flex-grow p-6 sm:p-10">
-                {passwords.length > 0 ? (
+<div className="flex-grow p-6 sm:p-10">
+                {isLoading ? (
+                    <Loading />
+                ) : passwords.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {passwords.map((item, index) => (
                             <div
@@ -97,7 +107,6 @@ function AllPassword() {
 
                                 <p className="mt-2 text-sm text-gray-400">Click to view details</p>
 
-                                {/* Minimal Delete Button */}
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
@@ -111,9 +120,13 @@ function AllPassword() {
                         ))}
                     </div>
                 ) : (
-                    <Loading />
+                    <div className="flex flex-col items-center justify-center text-center text-gray-300 h-[60vh]">
+                        <p className="text-2xl font-semibold mb-2">No passwords added yet 🔒</p>
+                        <p className="text-gray-400">Click “Add Password” below to get started.</p>
+                    </div>
                 )}
             </div>
+
 
             {/* Floating + Button */}
             <div className="fixed bottom-20 right-8 flex flex-col items-center">

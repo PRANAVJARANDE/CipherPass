@@ -78,13 +78,13 @@ const PasswordDetail = () => {
                     <strong>{fieldLabels[field]} :</strong>{" "}
                     {isEditing[field] ? (
                       <input
-                        type={field === "password" ? "password" : "text"}
+                        type="text"
                         value={editedData[field]}
                         onChange={(e) => handleChange(field, e.target.value)}
                         className="ml-2 px-2 py-1 text-black text-lg rounded-md"
                       />
                     ) : (
-                      <span>{passwordData[field]}</span>
+                      <span>{field === "password" ? "••••••••" : passwordData[field]}</span>
                     )}
                   </p>
                 </div>
