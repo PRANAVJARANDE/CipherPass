@@ -1,23 +1,29 @@
-import fs from "fs";
-import path from "path";
+import { Key } from "../models/keys.models.js";
 
-const keysDir = path.join(process.cwd(), "src", "Keys");
-
-const readPemFile = (filePath) => {
+export const getPublicKey = async () => {
   try {
-    const absolutePath = path.resolve(filePath);
-    const pemContent = fs.readFileSync(absolutePath, "utf-8").trim();
-    return `\`${pemContent}\``;
+    const keyDoc = await Key.findOne({});
+    if (!keyDoc || !keyDoc.publicKey) {
+      console.error("[KEY LOAD ERROR] Public key not found in database");
+      return null;
+    }
+    return keyDoc.publicKey;
   } catch (err) {
-    console.error(`[KEY LOAD ERROR] Failed to read ${filePath}:`, err.message);
+    console.error("[KEY LOAD ERROR] Failed to fetch public key from DB:", err.message);
     return null;
   }
 };
 
-export const getPublicKey = () => {
-  return readPemFile(path.join(keysDir, "publickey.pem"));
-};
-
-export const getPrivateKey = () => {
-  return readPemFile(path.join(keysDir, "privatekey.pem"));
+export const getPrivateKey = async () => {
+  try {
+    const keyDoc = await Key.findOne({});
+    if (!keyDoc || !keyDoc.privateKey) {
+      console.error("[KEY LOAD ERROR] Private key not found in database");
+      return null;
+    }
+    return keyDoc.privateKey;
+  } catch (err) {
+    console.error("[KEY LOAD ERROR] Failed to fetch private key from DB:", err.message);
+    return null;
+  }
 };
