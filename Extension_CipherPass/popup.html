@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CipherPass</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div id="login-container">
+      <img src="logo.png" alt="CipherPass Logo" class="logo">
+      <h1>CipherPass</h1>
+      <form id="login-form">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+
+    <div id="password-list-container" style="display: none;">
+      <div class="header">
+        <img src="logo.png" alt="CipherPass Logo" class="logo">
+        <button id="logout-btn">Logout</button>
+      </div>
+      <div id="password-list"></div>
+      <div id="no-passwords" style="display: none;">No passwords found for this site.</div>
+    </div>
+  </div>
+
+  <div id="master-password-modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h3>Verify Identity</h3>
+      <p>Enter your CipherPass master password to continue.</p>
+      <input type="password" id="master-password" placeholder="Master Password" required>
+      <button id="confirm-fill-btn">Fill Form</button>
+
+      <div id="decrypted-password-display" style="display: none;">
+        <p><strong>Password:</strong></p>
+        <div id="password-text"></div>
+        <button id="copy-password-btn">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
