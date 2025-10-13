@@ -1,31 +1,40 @@
 import React, { useEffect, useState } from "react";
 import Dashboard from "../Dashboard";
 import { useNavigate } from "react-router-dom";
-import { delete_A_Password_Service, getAllPasswords_Service } from "../../Service/Password.service";
+import { delete_A_Password_Service, getAllPasswords_Service ,sanitizeKey} from "../../Service/Password.service";
 import Loading from '../Loading/Loading.jsx';
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { FaTrash } from "react-icons/fa"; 
 import Footer from "../Footer.jsx";
+import PasswordSimilarityChecker from "./PasswordSimilarity.jsx";
+import { useSelector } from "react-redux";
+
+
 
 function AllPassword() {
     const [passwords, setPasswords] = useState([]);
     const [isLoading, setIsLoading] = useState(true); 
     const navigate = useNavigate();
+      const publicKey = useSelector((state) => sanitizeKey(state.publicKey));
+  const privateKey = useSelector((state) => state.privateKey);
 
     const [showpromt,setprompt] = useState(false);
     const [id,setid]=useState(null);
 
-    const fetchPasswords = async () => {
-        try {
-            setIsLoading(true); // start loading
-            const data = await getAllPasswords_Service();
-            setPasswords(data);
-        } catch (error) {
-            console.error("Error fetching passwords:", error);
-        } finally {
-            setIsLoading(false); // stop loading
-        }
-    };
+const fetchPasswords = async () => {
+  try {
+    setIsLoading(true);
+    const data = await getAllPasswords_Service();
+    // ✅ Ensure it's always an array
+    setPasswords(Array.isArray(data) ? data : []);
+  } catch (error) {
+    console.error("Error fetching passwords:", error);
+    setPasswords([]); // fallback safe value
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
     useEffect(() => {
         fetchPasswords();
@@ -35,6 +44,7 @@ function AllPassword() {
             setprompt(1)
             setid(id);
     };
+    console.log(passwords);
 
     return (
         <div className="min-h-[110vh] flex flex-col bg-gradient-to-br from-[#1B1F3B] to-[#4D869C] text-[#F5F7FA]">
@@ -67,6 +77,13 @@ function AllPassword() {
             </div>
         </div>
             )}
+
+<PasswordSimilarityChecker
+  allPasswordEntries={passwords}
+  publicKey={publicKey}
+  privateKey={privateKey}
+/>
+
 <div className="flex-grow p-6 sm:p-10">
                 {isLoading ? (
                     <Loading />
@@ -138,6 +155,8 @@ function AllPassword() {
 
                 )}
             </div>
+            
+            
 
 
             {/* Floating + Button */}
