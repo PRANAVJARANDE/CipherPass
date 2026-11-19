@@ -41,6 +41,71 @@ With **end-to-end encryption (E2EE)**, CipherPass is a highly secure and privacy
 
 This ensures **maximum security** by keeping **private keys client-side** while allowing the server to manage encrypted data effectively. 🚀
 
+
+## Docker Setup
+
+CipherPass supports containerized local deployment using
+Docker and Docker Compose.
+
+### Prerequisites
+- Docker Desktop
+- Docker Compose
+
+### Environment Configuration
+
+Create `Backend/.env.docker` with:
+
+```env
+ACCESS_TOKEN_SECRET=<your-secret>
+REFRESH_TOKEN_SECRET=<your-secret>
+ACCESS_TOKEN_EXPIRY=1d
+REFRESH_TOKEN_EXPIRY=10d
+```
+
+Generate secure, distinct JWT secrets locally.
+Never commit environment files containing secrets.
+
+Email recovery also requires EMAIL_USER and EMAIL_PASS.
+
+### Run the Application
+
+```bash
+docker compose up --build -d
+```
+
+Open http://localhost:8080
+
+### Useful Commands
+
+```bash
+docker compose ps
+docker compose logs -f backend
+docker compose down
+```
+
+MongoDB data is preserved through a named Docker volume.
+
+## CI/CD Pipeline
+
+GitHub Actions automatically runs on pushes and pull requests.
+
+Continuous Integration:
+- Builds the React frontend.
+- Validates backend JavaScript.
+- Builds and starts the Docker Compose services.
+- Runs API smoke tests for registration, login,
+  and authenticated access.
+
+Continuous Delivery:
+- Runs after successful CI on the main branch.
+- Publishes frontend and backend Docker images
+  to GitHub Container Registry (GHCR).
+- Tags images with `latest` and the Git commit SHA.
+
+This pipeline automates build verification, integration
+testing, and container image publishing.
+
+
 ## 🤝 Contributions  
 Contributions are welcome! If you have ideas for **new features, bug fixes, or improvements**, feel free to submit a pull request.  
 
