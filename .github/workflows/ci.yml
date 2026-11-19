@@ -1,0 +1,76 @@
+
+name: CipherPass CI
+
+on:
+  push:
+    branches: [main, "feature/**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Download the repository
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      # 2. Install Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      # 3. Check frontend build
+      - name: Build frontend
+        working-directory: ./Frontend
+        run: |
+          npm ci
+          npm run build
+
+      # 4. Validate backend JavaScript
+      - name: Validate backend
+        working-directory: ./Backend
+        run: |
+          npm ci
+          find src -name '*.js' -print0 | xargs -0 -n 1 node --check
+
+      # 5. Generate disposable test credentials
+      - name: Create test environment
+        run: |
+          printf 'ACCESS_TOKEN_SECRET=%s\nREFRESH_TOKEN_SECRET=%s\nACCESS_TOKEN_EXPIRY=1d\nREFRESH_TOKEN_EXPIRY=10d\n' \
+            "$(openssl rand -hex 32)" \
+            "$(openssl rand -hex 32)" > Backend/.env.docker
+
+      # 6. Build and start all Docker services
+      - name: Start Docker Compose
+        run: docker compose up --build -d
+
+      # 7. Wait until frontend and backend respond
+      - name: Wait for application
+        run: |
+          for i in {1..30}; do
+            front=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080/ || true)
+            back=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080/users/health-probe || true)
+            if [ "$front" = "200" ] && [ "$back" = "404" ]; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Application failed to start"
+          docker compose ps
+          exit 1
+
+      # 8. Run real API integration checks
+      - name: Run smoke tests
+        run: node scripts/smoke-test.mjs
+
+      # 9. Remove test containers
+      - name: Cleanup
+        if: always()
+        run: docker compose down || true
